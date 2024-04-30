@@ -1,4 +1,27 @@
 {
+    "version": "0.1.0",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/thepluck/damn-vulnerable-defi-typescript.git"
+    },
+    "scripts": {
+        "unstoppable": "pnpm hardhat test test/unstoppable/unstoppable.challenge.ts",
+        "truster": "pnpm hardhat test test/truster/truster.challenge.ts",
+        "naive-receiver": "pnpm hardhat test test/naive-receiver/naive-receiver.challenge.ts",
+        "side-entrance": "pnpm hardhat test test/side-entrance/side-entrance.challenge.ts",
+        "the-rewarder": "pnpm hardhat test test/the-rewarder/the-rewarder.challenge.ts",
+        "selfie": "pnpm hardhat test test/selfie/selfie.challenge.ts",
+        "compromised": "pnpm hardhat test test/compromised/compromised.challenge.ts",
+        "puppet": "pnpm hardhat test test/puppet/puppet.challenge.ts",
+        "puppet-v2": "pnpm hardhat test test/puppet-v2/puppet-v2.challenge.ts",
+        "free-rider": "pnpm hardhat test test/free-rider/free-rider.challenge.ts",
+        "backdoor": "pnpm hardhat test test/backdoor/backdoor.challenge.ts",
+        "climber": "pnpm hardhat test test/climber/climber.challenge.ts",
+        "wallet-mining": "pnpm hardhat test test/wallet-mining/wallet-mining.challenge.ts",
+        "abi-smuggling": "pnpm hardhat test test/abi-smuggling/abi-smuggling.challenge.ts",
+        "puppet-v3": "pnpm hardhat test test/puppet-v3/puppet-v3.challenge.ts"
+    },
     "devDependencies": {
         "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",
         "@nomicfoundation/hardhat-ethers": "^3.0.0",
@@ -29,5 +52,8 @@
         "ts-node": ">=8.0.0",
         "typechain": "^8.3.0",
         "typescript": ">=4.5.0"
+    },
+    "dependencies": {
+        "solhint": "^4.5.4"
     }
 }
