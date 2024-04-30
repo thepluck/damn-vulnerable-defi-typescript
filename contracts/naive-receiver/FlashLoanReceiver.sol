@@ -21,13 +21,12 @@ contract FlashLoanReceiver is IERC3156FlashBorrower {
     }
 
     function onFlashLoan(
-        address caller,
+        address,
         address token,
         uint256 amount,
         uint256 fee,
         bytes calldata
     ) external returns (bytes32) {
-        require(caller == address(this), "??");
         assembly {
             // gas savings
             if iszero(eq(sload(pool.slot), caller())) {
