@@ -1,4 +1,3 @@
-import { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signers';
 import { expect } from 'chai';
 import { ethers } from 'hardhat';
 
@@ -10,15 +9,15 @@ describe('[Challenge] Unstoppable', function () {
     /** SETUP SCENARIO - NO NEED TO CHANGE ANYTHING HERE */
     const [deployer, player, someUser] = await ethers.getSigners();
 
-    const tokenFactory = await ethers.getContractFactory('DamnValuableToken', deployer);
-    const token = await tokenFactory.deploy();
+    const token = await (await ethers.getContractFactory('DamnValuableToken', deployer)).deploy();
+    const vault = await (
+      await ethers.getContractFactory('UnstoppableVault', deployer)
+    ).deploy(token, deployer, deployer);
 
-    const vaultFactory = await ethers.getContractFactory('UnstoppableVault', deployer);
-    const vault = await vaultFactory.deploy(token, deployer, deployer);
     expect(await vault.asset()).to.eq(token);
 
     await token.approve(vault, TOKENS_IN_VAULT);
-    await vault.deposit(TOKENS_IN_VAULT, deployer.address);
+    await vault.deposit(TOKENS_IN_VAULT, deployer);
 
     expect(await token.balanceOf(vault)).to.eq(TOKENS_IN_VAULT);
     expect(await vault.totalAssets()).to.eq(TOKENS_IN_VAULT);
