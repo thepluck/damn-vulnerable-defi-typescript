@@ -19,7 +19,7 @@ describe('[Challenge] Truster', function () {
 
     /** CODE YOUR SOLUTION HERE */
     const attack = await (await ethers.getContractFactory('TrusterAttack', player)).deploy(pool, token);
-    await attack.excuteFlashLoan();
+    await attack.attack();
 
     /** SUCCESS CONDITIONS - NO NEED TO CHANGE ANYTHING HERE */
 

