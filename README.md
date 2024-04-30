@@ -16,3 +16,6 @@ Featuring flash loans, price oracles, governance, NFTs, lending pools, smart con
 
 - There are some changes made to the smart contracts.
 - Visit the [official repository](https://github.com/tinchoabbate/damn-vulnerable-defi/tree/v3.0.0) for more information.
+
+## Solutions
+- Look at the `solutions` branch for the solutions to the challenges.
