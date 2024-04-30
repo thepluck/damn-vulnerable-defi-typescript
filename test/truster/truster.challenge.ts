@@ -10,12 +10,12 @@ describe('[Challenge] Truster', function () {
 
     const token = await (await ethers.getContractFactory('DamnValuableToken', deployer)).deploy();
     const pool = await (await ethers.getContractFactory('TrusterLenderPool', deployer)).deploy(token);
-    expect(await pool.token()).to.eq(token);
+    expect(await pool.token()).to.equal(await token.getAddress());
 
     await token.transfer(pool, TOKENS_IN_POOL);
     expect(await token.balanceOf(pool)).to.equal(TOKENS_IN_POOL);
 
-    expect(await token.balanceOf(player)).to.equal(0);
+    expect(await token.balanceOf(player)).to.equal(0n);
 
     /** CODE YOUR SOLUTION HERE */
     const attack = await (await ethers.getContractFactory('TrusterAttack', player)).deploy(pool, token);
@@ -25,6 +25,6 @@ describe('[Challenge] Truster', function () {
 
     // Player has taken all tokens from the pool
     expect(await token.balanceOf(player)).to.equal(TOKENS_IN_POOL);
-    expect(await token.balanceOf(pool)).to.equal(0);
+    expect(await token.balanceOf(pool)).to.equal(0n);
   });
 });
