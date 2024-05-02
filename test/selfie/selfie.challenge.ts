@@ -11,16 +11,14 @@ describe('[Challenge] Selfie', function () {
     const [deployer, player] = await ethers.getSigners();
 
     // Deploy Damn Valuable Token Snapshot
-    const token = await (
-      await ethers.getContractFactory('DamnValuableTokenSnapshot', deployer)
-    ).deploy(TOKEN_INITIAL_SUPPLY);
+    const token = await ethers.deployContract('DamnValuableTokenSnapshot', [TOKEN_INITIAL_SUPPLY], deployer);
 
     // Deploy governance contract
-    const governance = await (await ethers.getContractFactory('SimpleGovernance', deployer)).deploy(token);
+    const governance = await ethers.deployContract('SimpleGovernance', [token], deployer);
     expect(await governance.getActionCounter()).to.eq(1);
 
     // Deploy the pool
-    const pool = await (await ethers.getContractFactory('SelfiePool', deployer)).deploy(token, governance);
+    const pool = await ethers.deployContract('SelfiePool', [token, governance], deployer);
     expect(await pool.token()).to.eq(token);
     expect(await pool.governance()).to.eq(governance);
 
