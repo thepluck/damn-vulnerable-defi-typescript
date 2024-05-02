@@ -2,6 +2,7 @@ import { HardhatUserConfig } from 'hardhat/config';
 import '@nomicfoundation/hardhat-ethers';
 import '@nomicfoundation/hardhat-chai-matchers';
 import '@typechain/hardhat';
+import 'hardhat-spdx-license-identifier';
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -15,6 +16,10 @@ const config: HardhatUserConfig = {
   typechain: {
     externalArtifacts: ['external-artifacts/**/*.json'],
   },
+  spdxLicenseIdentifier: {
+    overwrite: true,
+    runOnCompile: true,
+  }
 };
 
 export default config;

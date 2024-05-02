@@ -41,6 +41,7 @@
         "eth-permit": "^0.2.3",
         "ethers": "^6.4.0",
         "hardhat": "^2.22.3",
+        "hardhat-spdx-license-identifier": "^2.2.0",
         "solady": "^0.0.194",
         "solhint": "^4.5.4",
         "solidity-coverage": "^0.8.0",

@@ -62,6 +62,9 @@ importers:
       hardhat:
         specifier: ^2.22.3
         version: 2.22.3(ts-node@10.9.2(@types/node@20.12.7)(typescript@5.4.5))(typescript@5.4.5)
+      hardhat-spdx-license-identifier:
+        specifier: ^2.2.0
+        version: 2.2.0(hardhat@2.22.3(ts-node@10.9.2(@types/node@20.12.7)(typescript@5.4.5))(typescript@5.4.5))
       solady:
         specifier: ^0.0.194
         version: 0.0.194
@@ -1367,6 +1370,11 @@ packages:
     resolution: {integrity: sha512-vafaFqs8MZkRrSX7sFVUdo3ap/eNiLnb4IakshzvP56X5Nr1iGKAIqdX6tMlm6HcNRIkr6AxO5jFEoJzzpT8aQ==}
     engines: {node: '>=0.4.7'}
     hasBin: true
+
+  hardhat-spdx-license-identifier@2.2.0:
+    resolution: {integrity: sha512-audxGrmLL/TGr0Ef/p3tEH8frtygCb+9RWbMQtd1w2p5V6HzQsSJUlAJFywZZ/igQ6B1qAKqAbeLePNclEe2Qw==}
+    peerDependencies:
+      hardhat: ^2.0.0
 
   hardhat@2.22.3:
     resolution: {integrity: sha512-k8JV2ECWNchD6ahkg2BR5wKVxY0OiKot7fuxiIpRK0frRqyOljcR2vKwgWSLw6YIeDcNNA4xybj7Og7NSxr2hA==}
@@ -4235,6 +4243,10 @@ snapshots:
       wordwrap: 1.0.0
     optionalDependencies:
       uglify-js: 3.17.4
+
+  hardhat-spdx-license-identifier@2.2.0(hardhat@2.22.3(ts-node@10.9.2(@types/node@20.12.7)(typescript@5.4.5))(typescript@5.4.5)):
+    dependencies:
+      hardhat: 2.22.3(ts-node@10.9.2(@types/node@20.12.7)(typescript@5.4.5))(typescript@5.4.5)
 
   hardhat@2.22.3(ts-node@10.9.2(@types/node@20.12.7)(typescript@5.4.5))(typescript@5.4.5):
     dependencies:
