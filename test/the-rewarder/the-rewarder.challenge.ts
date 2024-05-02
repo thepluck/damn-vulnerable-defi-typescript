@@ -22,8 +22,8 @@ describe('[Challenge] The rewarder', function () {
     await liquidityToken.transfer(flashLoanPool, TOKENS_IN_LENDER_POOL);
 
     const rewarderPool = await TheRewarderPoolFactory.deploy(liquidityToken);
-    const rewardToken = await ethers.getContractAt('RewardToken', await rewarderPool.rewardToken());
-    const accountingToken = await ethers.getContractAt('AccountingToken', await rewarderPool.accountingToken());
+    const rewardToken = await ethers.getContractAt('RewardToken', await rewarderPool.rewardToken(), deployer);
+    const accountingToken = await ethers.getContractAt('AccountingToken', await rewarderPool.accountingToken(), deployer);
 
     // Check roles in accounting token
     expect(await accountingToken.owner()).to.eq(rewarderPool);
