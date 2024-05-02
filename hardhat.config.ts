@@ -2,7 +2,6 @@ import { HardhatUserConfig } from 'hardhat/config';
 import '@nomicfoundation/hardhat-ethers';
 import '@nomicfoundation/hardhat-chai-matchers';
 import '@typechain/hardhat';
-import 'hardhat-spdx-license-identifier';
 
 const config: HardhatUserConfig = {
   solidity: {
