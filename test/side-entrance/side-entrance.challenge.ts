@@ -11,7 +11,7 @@ describe('[Challenge] Side entrance', function () {
     const [deployer, player] = await ethers.getSigners();
 
     // Deploy pool and fund it
-    const pool = await ethers.deployContract('SideEntranceLenderPool', [], deployer);
+    const pool = await ethers.deployContract('SideEntranceLenderPool', deployer);
     await pool.deposit({ value: ETHER_IN_POOL });
     expect(await ethers.provider.getBalance(pool)).to.equal(ETHER_IN_POOL);
 

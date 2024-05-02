@@ -29,15 +29,19 @@ describe('Compromised challenge', function () {
     expect(await ethers.provider.getBalance(player)).to.equal(PLAYER_INITIAL_ETH_BALANCE);
 
     // Deploy the oracle and setup the trusted sources with initial prices
-    const oracleInitializer = await (
-      await ethers.getContractFactory('TrustfulOracleInitializer', deployer)
-    ).deploy(sources, ['DVNFT', 'DVNFT', 'DVNFT'], [INITIAL_NFT_PRICE, INITIAL_NFT_PRICE, INITIAL_NFT_PRICE]);
+    const oracleInitializer = await ethers.deployContract(
+      'TrustfulOracleInitializer',
+      [sources, ['DVNFT', 'DVNFT', 'DVNFT'], [INITIAL_NFT_PRICE, INITIAL_NFT_PRICE, INITIAL_NFT_PRICE]],
+      deployer
+    );
     const oracle = await ethers.getContractAt('TrustfulOracle', oracleInitializer, deployer);
 
     // Deploy the exchange and get an instance to the associated ERC721 token
-    const exchange = await (
-      await ethers.getContractFactory('Exchange', deployer)
-    ).deploy(oracle, { value: EXCHANGE_INITIAL_ETH_BALANCE });
+    const exchange = await ethers.deployContract(
+      'Exchange',
+      [oracle, { value: EXCHANGE_INITIAL_ETH_BALANCE }],
+      deployer
+    );
     const nftToken = await ethers.getContractAt('DamnValuableNFT', await exchange.token(), deployer);
     expect(await nftToken.owner()).to.equal(ethers.ZeroAddress); // ownership renounced
     expect(await nftToken.rolesOf(exchange)).to.eq(await nftToken.MINTER_ROLE());

@@ -11,19 +11,19 @@ describe('[Challenge] The rewarder', function () {
     const [deployer, alice, bob, charlie, david, player] = await ethers.getSigners();
     const users = [alice, bob, charlie, david];
 
-    const FlashLoanerPoolFactory = await ethers.getContractFactory('FlashLoanerPool', deployer);
-    const TheRewarderPoolFactory = await ethers.getContractFactory('TheRewarderPool', deployer);
-    const DamnValuableTokenFactory = await ethers.getContractFactory('DamnValuableToken', deployer);
-
-    const liquidityToken = await DamnValuableTokenFactory.deploy();
-    const flashLoanPool = await FlashLoanerPoolFactory.deploy(liquidityToken);
+    const liquidityToken = await ethers.deployContract('DamnValuableToken', deployer);
+    const flashLoanPool = await ethers.deployContract('FlashLoanerPool', [liquidityToken], deployer);
 
     // Set initial token balance of the pool offering flash loans
     await liquidityToken.transfer(flashLoanPool, TOKENS_IN_LENDER_POOL);
 
-    const rewarderPool = await TheRewarderPoolFactory.deploy(liquidityToken);
+    const rewarderPool = await ethers.deployContract('TheRewarderPool', [liquidityToken], deployer);
     const rewardToken = await ethers.getContractAt('RewardToken', await rewarderPool.rewardToken(), deployer);
-    const accountingToken = await ethers.getContractAt('AccountingToken', await rewarderPool.accountingToken(), deployer);
+    const accountingToken = await ethers.getContractAt(
+      'AccountingToken',
+      await rewarderPool.accountingToken(),
+      deployer
+    );
 
     // Check roles in accounting token
     expect(await accountingToken.owner()).to.eq(rewarderPool);
@@ -44,7 +44,7 @@ describe('[Challenge] The rewarder', function () {
     expect(await rewardToken.totalSupply()).to.be.eq(0);
 
     // Advance time 5 days so that depositors can get rewards
-    await time.increase(5 * 24 * 60 * 60) // 5 days
+    await time.increase(5 * 24 * 60 * 60); // 5 days
 
     // Each depositor gets reward tokens
     let rewardsInRound = await rewarderPool.REWARDS();

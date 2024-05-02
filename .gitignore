@@ -15,10 +15,3 @@ node_modules/*
 
 # Include @safe-global
 !node_modules/@safe-global
-
-# Solhint
-.solhintignore
-.solhint.json
-
-# Prettier
-.prettierrc
