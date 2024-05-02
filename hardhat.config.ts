@@ -16,10 +16,6 @@ const config: HardhatUserConfig = {
   typechain: {
     externalArtifacts: ['external-artifacts/**/*.json'],
   },
-  spdxLicenseIdentifier: {
-    overwrite: true,
-    runOnCompile: true,
-  }
 };
 
 export default config;
