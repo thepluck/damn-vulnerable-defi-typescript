@@ -12,7 +12,7 @@ describe('[Challenge] Naive receiver', function () {
     /** SETUP SCENARIO - NO NEED TO CHANGE ANYTHING HERE */
     const [deployer, user, player] = await ethers.getSigners();
 
-    const pool = await ethers.deployContract('NaiveReceiverLenderPool', [], deployer);
+    const pool = await ethers.deployContract('NaiveReceiverLenderPool', deployer);
     await deployer.sendTransaction({ to: pool, value: ETHER_IN_POOL });
     const ETH = await pool.ETH();
 

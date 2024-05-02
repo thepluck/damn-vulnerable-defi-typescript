@@ -19,6 +19,3 @@ node_modules/*
 # Solhint
 .solhintignore
 .solhint.json
-
-# Prettier
-.prettierrc

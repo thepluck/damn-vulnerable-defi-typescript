@@ -9,7 +9,7 @@ describe('[Challenge] Unstoppable', function () {
     /** SETUP SCENARIO - NO NEED TO CHANGE ANYTHING HERE */
     const [deployer, player, someUser] = await ethers.getSigners();
 
-    const token = await ethers.deployContract('DamnValuableToken', [], deployer);
+    const token = await ethers.deployContract('DamnValuableToken', deployer);
     const vault = await ethers.deployContract('UnstoppableVault', [token, deployer, deployer], deployer);
 
     expect(await vault.asset()).to.eq(token);

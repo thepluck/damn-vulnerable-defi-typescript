@@ -8,8 +8,8 @@ describe('[Challenge] Truster', function () {
     /** SETUP SCENARIO - NO NEED TO CHANGE ANYTHING HERE */
     const [deployer, player] = await ethers.getSigners();
 
-    const token = await (await ethers.getContractFactory('DamnValuableToken', deployer)).deploy();
-    const pool = await (await ethers.getContractFactory('TrusterLenderPool', deployer)).deploy(token);
+    const token = await ethers.deployContract('DamnValuableToken', deployer);
+    const pool = await ethers.deployContract('TrusterLenderPool', [token], deployer);
     expect(await pool.token()).to.eq(token);
 
     await token.transfer(pool, TOKENS_IN_POOL);
