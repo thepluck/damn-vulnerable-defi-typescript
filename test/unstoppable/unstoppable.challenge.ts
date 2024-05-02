@@ -9,10 +9,8 @@ describe('[Challenge] Unstoppable', function () {
     /** SETUP SCENARIO - NO NEED TO CHANGE ANYTHING HERE */
     const [deployer, player, someUser] = await ethers.getSigners();
 
-    const token = await (await ethers.getContractFactory('DamnValuableToken', deployer)).deploy();
-    const vault = await (
-      await ethers.getContractFactory('UnstoppableVault', deployer)
-    ).deploy(token, deployer, deployer);
+    const token = await ethers.deployContract('DamnValuableToken', [], deployer);
+    const vault = await ethers.deployContract('UnstoppableVault', [token, deployer, deployer], deployer);
 
     expect(await vault.asset()).to.eq(token);
 
@@ -30,8 +28,7 @@ describe('[Challenge] Unstoppable', function () {
     expect(await token.balanceOf(player.address)).to.eq(INITIAL_PLAYER_TOKEN_BALANCE);
 
     // Show it's possible for someUser to take out a flash loan
-    const receiverContractFactory = await ethers.getContractFactory('ReceiverUnstoppable', someUser);
-    const receiverContract = await receiverContractFactory.deploy(vault);
+    const receiverContract = await ethers.deployContract('ReceiverUnstoppable', [vault], someUser);
     await receiverContract.executeFlashLoan(100n * 10n ** 18n);
 
     /** CODE YOUR SOLUTION HERE */
