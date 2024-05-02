@@ -25,7 +25,7 @@ describe('[Challenge] Side entrance', function () {
     /** SUCCESS CONDITIONS - NO NEED TO CHANGE ANYTHING HERE */
 
     // Player took all ETH from the pool
-    expect(await ethers.provider.getBalance(pool)).to.be.equal(0);
+    expect(await ethers.provider.getBalance(pool)).to.be.equal(0n);
     expect(await ethers.provider.getBalance(player)).to.be.gt(ETHER_IN_POOL);
   });
 });
