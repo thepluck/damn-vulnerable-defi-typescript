@@ -35,4 +35,4 @@ pnpm [CHALLENGE_NAME]
 - Some challenges require you to code and deploy custom smart contracts.
 
 ## Solutions
-- Take a look at the `solutions` branch to see the solutions to all challenges.
+- Take a look at the [`solutions`](https://github.com/thepluck/damn-vulnerable-defi-typescript/tree/solutions) branch to see the solutions to all challenges.
