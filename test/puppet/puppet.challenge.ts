@@ -3,7 +3,8 @@ import { expect } from 'chai';
 import { setBalance, time } from '@nomicfoundation/hardhat-network-helpers';
 import factoryJson from '../../uniswap-v1-build/UniswapV1Factory.json';
 import exchangeJson from '../../uniswap-v1-build/UniswapV1Exchange.json';
-import { UniswapV1Exchange__factory, UniswapV1Factory } from '../../typechain-types';
+import { UniswapV1Exchange__factory, UniswapV1Factory, UniswapV1Exchange } from '../../typechain-types';
+import { EventLog } from 'ethers';
 
 // Calculates how much ETH (in wei) Uniswap will pay for the given amount of tokens
 function calculateTokenToEthInputPrice(tokensSold: bigint, tokensInReserve: bigint, etherInReserve: bigint) {
@@ -30,7 +31,7 @@ describe('[Challenge] Puppet', function () {
       exchangeJson.bytecode
     )) as UniswapV1Exchange__factory;
 
-    setBalance(player.address, PLAYER_INITIAL_ETH_BALANCE);
+    await setBalance(player.address, PLAYER_INITIAL_ETH_BALANCE);
     expect(await ethers.provider.getBalance(player)).to.equal(PLAYER_INITIAL_ETH_BALANCE);
 
     // Deploy token to be traded in Uniswap
@@ -46,7 +47,11 @@ describe('[Challenge] Puppet', function () {
     // Create a new exchange for the token, and retrieve the deployed exchange's address
     let tx = await uniswapFactory.createExchange(token, { gasLimit: 1e6 });
     const receipt = await tx.wait();
-    const uniswapExchange = await ethers.getContractAt('UniswapV1Exchange', receipt!.logs[0].topics[1]);
+    const uniswapExchange = (await ethers.getContractAt(
+      exchangeJson.abi,
+      (receipt!.logs[0] as EventLog).args[1],
+      deployer
+    )) as unknown as UniswapV1Exchange;
 
     // Deploy the lending pool
     const lendingPool = await ethers.deployContract('PuppetPool', [token, uniswapExchange]);
