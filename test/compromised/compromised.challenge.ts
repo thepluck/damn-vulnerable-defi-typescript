@@ -33,7 +33,7 @@ describe('Compromised challenge', function () {
       'TrustfulOracleInitializer',
       [sources, ['DVNFT', 'DVNFT', 'DVNFT'], [INITIAL_NFT_PRICE, INITIAL_NFT_PRICE, INITIAL_NFT_PRICE]],
     );
-    const oracle = await ethers.getContractAt('TrustfulOracle', oracleInitializer);
+    const oracle = await ethers.getContractAt('TrustfulOracle', await oracleInitializer.oracle());
 
     // Deploy the exchange and get an instance to the associated ERC721 token
     const exchange = await ethers.deployContract(
