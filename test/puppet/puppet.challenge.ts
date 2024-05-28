@@ -1,8 +1,8 @@
 import { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { setBalance, time } from '@nomicfoundation/hardhat-network-helpers';
-import UniswapV1FactoryArtifact from '../../external-artifacts/uniswap-v1/UniswapV1Factory.json';
-import UniswapV1ExchangeArtifact from '../../external-artifacts/uniswap-v1/UniswapV1Exchange.json';
+import factoryJson from '../../uniswap-v1-build/UniswapV1Factory.json';
+import exchangeJson from '../../uniswap-v1-build/UniswapV1Exchange.json';
 import { UniswapV1Exchange__factory, UniswapV1Factory } from '../../typechain-types';
 
 // Calculates how much ETH (in wei) Uniswap will pay for the given amount of tokens
@@ -23,19 +23,18 @@ describe('[Challenge] Puppet', function () {
     /** SETUP SCENARIO - NO NEED TO CHANGE ANYTHING HERE */
     const [deployer, player] = await ethers.getSigners();
     const uniswapFactory = (await (
-      await ethers.getContractFactory(UniswapV1FactoryArtifact.abi, UniswapV1FactoryArtifact.bytecode, deployer)
+      await ethers.getContractFactory(factoryJson.abi, factoryJson.bytecode)
     ).deploy()) as UniswapV1Factory;
-    const UniswapExchangeFactory = await ethers.getContractFactory(
-      UniswapV1ExchangeArtifact.abi,
-      UniswapV1ExchangeArtifact.bytecode,
-      deployer
-    ) as UniswapV1Exchange__factory;
+    const UniswapExchangeFactory = (await ethers.getContractFactory(
+      exchangeJson.abi,
+      exchangeJson.bytecode
+    )) as UniswapV1Exchange__factory;
 
     setBalance(player.address, PLAYER_INITIAL_ETH_BALANCE);
     expect(await ethers.provider.getBalance(player)).to.equal(PLAYER_INITIAL_ETH_BALANCE);
 
     // Deploy token to be traded in Uniswap
-    const token = await (await ethers.getContractFactory('DamnValuableToken', deployer)).deploy();
+    const token = await ethers.deployContract('DamnValuableToken');
 
     // Deploy a exchange that will be used as the factory template
     const exchangeTemplate = await UniswapExchangeFactory.deploy();
@@ -50,7 +49,7 @@ describe('[Challenge] Puppet', function () {
     const uniswapExchange = await ethers.getContractAt('UniswapV1Exchange', receipt!.logs[0].topics[1]);
 
     // Deploy the lending pool
-    const lendingPool = await (await ethers.getContractFactory('PuppetPool', deployer)).deploy(token, uniswapExchange);
+    const lendingPool = await ethers.deployContract('PuppetPool', [token, uniswapExchange]);
 
     // Add initial token and ETH liquidity to the pool
     await token.approve(uniswapExchange, UNISWAP_INITIAL_TOKEN_RESERVE);

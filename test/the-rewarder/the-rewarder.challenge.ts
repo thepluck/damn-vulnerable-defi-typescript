@@ -11,19 +11,15 @@ describe('[Challenge] The rewarder', function () {
     const [deployer, alice, bob, charlie, david, player] = await ethers.getSigners();
     const users = [alice, bob, charlie, david];
 
-    const liquidityToken = await ethers.deployContract('DamnValuableToken', deployer);
-    const flashLoanPool = await ethers.deployContract('FlashLoanerPool', [liquidityToken], deployer);
+    const liquidityToken = await ethers.deployContract('DamnValuableToken');
+    const flashLoanPool = await ethers.deployContract('FlashLoanerPool', [liquidityToken]);
 
     // Set initial token balance of the pool offering flash loans
     await liquidityToken.transfer(flashLoanPool, TOKENS_IN_LENDER_POOL);
 
-    const rewarderPool = await ethers.deployContract('TheRewarderPool', [liquidityToken], deployer);
-    const rewardToken = await ethers.getContractAt('RewardToken', await rewarderPool.rewardToken(), deployer);
-    const accountingToken = await ethers.getContractAt(
-      'AccountingToken',
-      await rewarderPool.accountingToken(),
-      deployer
-    );
+    const rewarderPool = await ethers.deployContract('TheRewarderPool', [liquidityToken]);
+    const rewardToken = await ethers.getContractAt('RewardToken', await rewarderPool.rewardToken());
+    const accountingToken = await ethers.getContractAt('AccountingToken', await rewarderPool.accountingToken());
 
     // Check roles in accounting token
     expect(await accountingToken.owner()).to.eq(rewarderPool);

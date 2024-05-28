@@ -26,6 +26,9 @@ importers:
       '@openzeppelin/hardhat-upgrades':
         specifier: ^3.1.0
         version: 3.1.0(@nomicfoundation/hardhat-ethers@3.0.5(ethers@6.12.0)(hardhat@2.22.3(ts-node@10.9.2(@types/node@20.12.7)(typescript@5.4.5))(typescript@5.4.5)))(@nomicfoundation/hardhat-verify@2.0.6(hardhat@2.22.3(ts-node@10.9.2(@types/node@20.12.7)(typescript@5.4.5))(typescript@5.4.5)))(ethers@6.12.0)(hardhat@2.22.3(ts-node@10.9.2(@types/node@20.12.7)(typescript@5.4.5))(typescript@5.4.5))
+      '@safe-global/safe-contracts':
+        specifier: 1.4.1-build.0
+        version: 1.4.1-build.0(ethers@6.12.0)
       '@typechain/ethers-v6':
         specifier: ^0.5.0
         version: 0.5.1(ethers@6.12.0)(typechain@8.3.2(typescript@5.4.5))(typescript@5.4.5)
@@ -41,6 +44,12 @@ importers:
       '@types/node':
         specifier: '>=18.0.0'
         version: 20.12.7
+      '@uniswap/lib':
+        specifier: 4.0.1-alpha
+        version: 4.0.1-alpha
+      '@uniswap/v2-core':
+        specifier: ^1.0.1
+        version: 1.0.1
       '@uniswap/v2-periphery':
         specifier: 1.1.0-beta.0
         version: 1.1.0-beta.0
@@ -62,6 +71,9 @@ importers:
       hardhat:
         specifier: ^2.22.3
         version: 2.22.3(ts-node@10.9.2(@types/node@20.12.7)(typescript@5.4.5))(typescript@5.4.5)
+      hardhat-dependency-compiler:
+        specifier: ^1.1.4
+        version: 1.1.4(hardhat@2.22.3(ts-node@10.9.2(@types/node@20.12.7)(typescript@5.4.5))(typescript@5.4.5))
       solady:
         specifier: ^0.0.194
         version: 0.0.194
@@ -484,6 +496,11 @@ packages:
   '@pnpm/npm-conf@2.2.2':
     resolution: {integrity: sha512-UA91GwWPhFExt3IizW6bOeY/pQ0BkuNwKjk9iQW9KqxluGCrg4VenZ0/L+2Y0+ZOtme72EVvg6v0zo3AMQRCeA==}
     engines: {node: '>=12'}
+
+  '@safe-global/safe-contracts@1.4.1-build.0':
+    resolution: {integrity: sha512-TIpoKJtMqLcLFoid0cvpxo8YTcnRUj95MHvxzwgPbJPRONOckNS6ebgGyBBRDmnpxFh34IBpPUZ7JD+z2Cfbbg==}
+    peerDependencies:
+      ethers: 5.4.0
 
   '@scure/base@1.1.6':
     resolution: {integrity: sha512-ok9AWwhcgYuGG3Zfhyqg+zwl+Wn5uE+dwC0NV/2qQkx4dABbb/bx96vWu8NSj+BNjjSjno+JRYRjle1jV08k3g==}
@@ -1367,6 +1384,12 @@ packages:
     resolution: {integrity: sha512-vafaFqs8MZkRrSX7sFVUdo3ap/eNiLnb4IakshzvP56X5Nr1iGKAIqdX6tMlm6HcNRIkr6AxO5jFEoJzzpT8aQ==}
     engines: {node: '>=0.4.7'}
     hasBin: true
+
+  hardhat-dependency-compiler@1.1.4:
+    resolution: {integrity: sha512-bEsNwSU2owIcKTRJS1vz/VTI1mILfSYiI/4Zcwee99XC41uQIcDDSvJOdIveeMyO7E50JLg2lZet7oIxTC9Gyg==}
+    engines: {node: '>=14.14.0'}
+    peerDependencies:
+      hardhat: ^2.0.0
 
   hardhat@2.22.3:
     resolution: {integrity: sha512-k8JV2ECWNchD6ahkg2BR5wKVxY0OiKot7fuxiIpRK0frRqyOljcR2vKwgWSLw6YIeDcNNA4xybj7Og7NSxr2hA==}
@@ -3105,6 +3128,10 @@ snapshots:
       '@pnpm/network.ca-file': 1.0.2
       config-chain: 1.1.13
 
+  '@safe-global/safe-contracts@1.4.1-build.0(ethers@6.12.0)':
+    dependencies:
+      ethers: 6.12.0
+
   '@scure/base@1.1.6': {}
 
   '@scure/bip32@1.1.5':
@@ -4235,6 +4262,10 @@ snapshots:
       wordwrap: 1.0.0
     optionalDependencies:
       uglify-js: 3.17.4
+
+  hardhat-dependency-compiler@1.1.4(hardhat@2.22.3(ts-node@10.9.2(@types/node@20.12.7)(typescript@5.4.5))(typescript@5.4.5)):
+    dependencies:
+      hardhat: 2.22.3(ts-node@10.9.2(@types/node@20.12.7)(typescript@5.4.5))(typescript@5.4.5)
 
   hardhat@2.22.3(ts-node@10.9.2(@types/node@20.12.7)(typescript@5.4.5))(typescript@5.4.5):
     dependencies:

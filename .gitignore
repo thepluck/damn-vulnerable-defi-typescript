@@ -1,4 +1,4 @@
-node_modules/*
+node_modules
 .env
 
 # Hardhat files
@@ -12,6 +12,3 @@ node_modules/*
 # solidity-coverage files
 /coverage
 /coverage.json
-
-# Include @safe-global
-!node_modules/@safe-global

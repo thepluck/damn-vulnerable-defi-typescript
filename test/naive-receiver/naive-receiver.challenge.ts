@@ -12,7 +12,7 @@ describe('[Challenge] Naive receiver', function () {
     /** SETUP SCENARIO - NO NEED TO CHANGE ANYTHING HERE */
     const [deployer, user, player] = await ethers.getSigners();
 
-    const pool = await ethers.deployContract('NaiveReceiverLenderPool', deployer);
+    const pool = await ethers.deployContract('NaiveReceiverLenderPool');
     await deployer.sendTransaction({ to: pool, value: ETHER_IN_POOL });
     const ETH = await pool.ETH();
 
@@ -20,7 +20,7 @@ describe('[Challenge] Naive receiver', function () {
     expect(await pool.maxFlashLoan(ETH)).to.eq(ETHER_IN_POOL);
     expect(await pool.flashFee(ETH, 0)).to.eq(10n ** 18n);
 
-    const receiver = await ethers.deployContract('FlashLoanReceiver', [pool], deployer);
+    const receiver = await ethers.deployContract('FlashLoanReceiver', [pool]);
     await deployer.sendTransaction({ to: receiver, value: ETHER_IN_RECEIVER });
     await expect(receiver.onFlashLoan(deployer, ETH, ETHER_IN_RECEIVER, 10n ** 18n, '0x')).to.be.reverted;
     expect(await ethers.provider.getBalance(receiver)).to.eq(ETHER_IN_RECEIVER);

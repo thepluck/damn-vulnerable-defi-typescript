@@ -1,6 +1,5 @@
 import { ethers } from 'hardhat';
 import { expect } from 'chai';
-import { time } from '@nomicfoundation/hardhat-network-helpers';
 
 describe('[Challenge] Selfie', function () {
   it('should take all the tokens', async function () {
@@ -11,14 +10,14 @@ describe('[Challenge] Selfie', function () {
     const [deployer, player] = await ethers.getSigners();
 
     // Deploy Damn Valuable Token Snapshot
-    const token = await ethers.deployContract('DamnValuableTokenSnapshot', [TOKEN_INITIAL_SUPPLY], deployer);
+    const token = await ethers.deployContract('DamnValuableTokenSnapshot', [TOKEN_INITIAL_SUPPLY]);
 
     // Deploy governance contract
-    const governance = await ethers.deployContract('SimpleGovernance', [token], deployer);
+    const governance = await ethers.deployContract('SimpleGovernance', [token]);
     expect(await governance.getActionCounter()).to.eq(1);
 
     // Deploy the pool
-    const pool = await ethers.deployContract('SelfiePool', [token, governance], deployer);
+    const pool = await ethers.deployContract('SelfiePool', [token, governance]);
     expect(await pool.token()).to.eq(token);
     expect(await pool.governance()).to.eq(governance);
 
