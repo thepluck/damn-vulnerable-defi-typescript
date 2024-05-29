@@ -82,13 +82,7 @@ describe('[Challenge] Free Rider', function () {
     expect(await marketplace.offersCount()).to.be.eq(6);
 
     // Deploy devs' contract, adding the player as the beneficiary
-    const devsContract = await (
-      await ethers.getContractFactory('FreeRiderRecovery', devs)
-    ).deploy(
-      player, // beneficiary
-      nft,
-      { value: BOUNTY }
-    );
+    const devsContract = await ethers.deployContract('FreeRiderRecovery', [player, nft, { value: BOUNTY }], devs);
 
     /** CODE YOUR SOLUTION HERE */
 
