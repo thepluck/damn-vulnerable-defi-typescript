@@ -5,7 +5,6 @@ pragma solidity ^0.8.20;
 import "./TrusterLenderPool.sol";
 
 contract TrusterAttack {
-
     TrusterLenderPool public pool;
     DamnValuableToken public token;
 

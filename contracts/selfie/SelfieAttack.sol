@@ -9,6 +9,7 @@ contract SelfieAttack is IERC3156FlashBorrower {
     SelfiePool public pool;
     SimpleGovernance public governance;
     DamnValuableTokenSnapshot public token;
+
     constructor(address poolAddress, address governanceAddress) {
         pool = SelfiePool(poolAddress);
         governance = SimpleGovernance(governanceAddress);

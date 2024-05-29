@@ -4,9 +4,7 @@ pragma solidity ^0.8.20;
 import "./TheRewarderPool.sol";
 import "./FlashLoanerPool.sol";
 
-
 contract TheRewarderAttack {
-
     TheRewarderPool public theRewarderPool;
     FlashLoanerPool public flashLoanerPool;
 

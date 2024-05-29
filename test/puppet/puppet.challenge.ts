@@ -85,7 +85,7 @@ describe('[Challenge] Puppet', function () {
     // Player swap all tokens for ETH
     const attack = await ethers.deployContract('PuppetAttack', [lendingPool, uniswapExchange], deployer);
     await token.connect(player).transfer(attack, PLAYER_INITIAL_TOKEN_BALANCE);
-    await attack.attack(player, {value: 11n * 10n ** 18n});
+    await attack.attack(player, { value: 11n * 10n ** 18n });
 
     /** SUCCESS CONDITIONS - NO NEED TO CHANGE ANYTHING HERE */
     // Player executed a single transaction
