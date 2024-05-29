@@ -37,8 +37,7 @@ describe('Compromised challenge', function () {
     const oracle = await ethers.getContractAt('TrustfulOracle', await oracleInitializer.oracle());
 
     // Deploy the exchange and get an instance to the associated ERC721 token
-    const exchangeFactory = await ethers.getContractFactory('Exchange');
-    const exchange = await exchangeFactory.deploy(oracle, { value: EXCHANGE_INITIAL_ETH_BALANCE });
+    const exchange = await ethers.deployContract('Exchange', [oracle], { value: EXCHANGE_INITIAL_ETH_BALANCE });
     const nftToken = await ethers.getContractAt('DamnValuableNFT', await exchange.token());
     expect(await nftToken.owner()).to.equal(ethers.ZeroAddress); // ownership renounced
     expect(await nftToken.rolesOf(exchange)).to.eq(await nftToken.MINTER_ROLE());
