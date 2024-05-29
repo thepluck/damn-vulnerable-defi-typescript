@@ -57,9 +57,7 @@ describe('[Challenge] The rewarder', function () {
     expect(await rewarderPool.roundNumber()).to.be.eq(2);
 
     /** CODE YOUR SOLUTION HERE */
-    const attack = await (
-      await ethers.getContractFactory('TheRewarderAttack', player)
-    ).deploy(rewarderPool, flashLoanPool);
+    const attack = await ethers.deployContract('TheRewarderAttack', [rewarderPool, flashLoanPool], player);
     await time.increase(5 * 24 * 60 * 60); // 5 days
     await attack.attack();
 
