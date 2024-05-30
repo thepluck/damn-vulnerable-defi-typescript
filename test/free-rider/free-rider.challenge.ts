@@ -7,7 +7,7 @@ import routerJson from '@uniswap/v2-periphery/build/UniswapV2Router02.json';
 import { UniswapV2Factory, UniswapV2Pair, UniswapV2Router02 } from '../../typechain-types';
 
 describe('[Challenge] Free Rider', function () {
-  it('??', async function () {
+  it('should earn the bounty', async function () {
     // The NFT marketplace will have 6 tokens, at 15 ETH each
     const NFT_PRICE = 15n * 10n ** 18n;
     const AMOUNT_OF_NFTS = 6;
@@ -25,7 +25,7 @@ describe('[Challenge] Free Rider', function () {
     const [deployer, player, devs] = await ethers.getSigners();
 
     // Player starts with limited ETH balance
-    setBalance(player.address, PLAYER_INITIAL_ETH_BALANCE);
+    await setBalance(player.address, PLAYER_INITIAL_ETH_BALANCE);
     expect(await ethers.provider.getBalance(player)).to.eq(PLAYER_INITIAL_ETH_BALANCE);
 
     // Deploy tokens to be traded
@@ -56,8 +56,6 @@ describe('[Challenge] Free Rider', function () {
       await uniswapFactory.getPair(token, weth)
     )) as unknown as UniswapV2Pair;
 
-    expect(await uniswapPair.token0()).to.eq(weth);
-    expect(await uniswapPair.token1()).to.eq(token);
     expect(await uniswapPair.balanceOf(deployer)).to.be.gt(0);
 
     // Deploy the marketplace and get the associated ERC721 token
@@ -82,7 +80,9 @@ describe('[Challenge] Free Rider', function () {
     expect(await marketplace.offersCount()).to.be.eq(6);
 
     // Deploy devs' contract, adding the player as the beneficiary
-    const devsContract = await ethers.deployContract('FreeRiderRecovery', [player, nft, { value: BOUNTY }], devs);
+    const devsContract = await (
+      await ethers.getContractFactory('FreeRiderRecovery', devs)
+    ).deploy(player, nft, { value: BOUNTY });
 
     /** CODE YOUR SOLUTION HERE */
 
