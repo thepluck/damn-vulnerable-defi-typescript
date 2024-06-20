@@ -20,7 +20,8 @@
         "climber": "yarn hardhat test test/climber/climber.challenge.ts",
         "wallet-mining": "yarn hardhat test test/wallet-mining/wallet-mining.challenge.ts",
         "abi-smuggling": "yarn hardhat test test/abi-smuggling/abi-smuggling.challenge.ts",
-        "puppet-v3": "yarn hardhat test test/puppet-v3/puppet-v3.challenge.ts"
+        "puppet-v3": "yarn hardhat test test/puppet-v3/puppet-v3.challenge.ts",
+        "format": "yarn prettier --write ."
     },
     "devDependencies": {
         "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",
@@ -45,6 +46,7 @@
         "ethers": "^6.4.0",
         "hardhat": "^2.22.3",
         "hardhat-dependency-compiler": "^1.1.4",
+        "prettier": "^3.3.2",
         "solady": "^0.0.194",
         "solhint": "^4.5.4",
         "solidity-coverage": "^0.8.0",
