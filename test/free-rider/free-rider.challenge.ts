@@ -49,11 +49,11 @@ describe('[Challenge] Free Rider', function () {
       0, // amountETHMin
       deployer, // to
       (await time.latest()) * 2, // deadline
-      { value: UNISWAP_INITIAL_WETH_RESERVE }
+      { value: UNISWAP_INITIAL_WETH_RESERVE },
     );
     const uniswapPair = (await ethers.getContractAt(
       pairJson.abi,
-      await uniswapFactory.getPair(token, weth)
+      await uniswapFactory.getPair(token, weth),
     )) as unknown as UniswapV2Pair;
 
     expect(await uniswapPair.balanceOf(deployer)).to.be.gt(0);
@@ -88,7 +88,7 @@ describe('[Challenge] Free Rider', function () {
     const attack = await ethers.deployContract(
       'FreeRiderAttack',
       [marketplace, devsContract, uniswapPair, weth, nft, player],
-      player
+      player,
     );
     await attack.attack();
     /** SUCCESS CONDITIONS - NO NEED TO CHANGE ANYTHING HERE */

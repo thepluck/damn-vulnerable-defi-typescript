@@ -28,7 +28,7 @@ describe('[Challenge] Puppet', function () {
     ).deploy()) as UniswapV1Factory;
     const UniswapExchangeFactory = (await ethers.getContractFactory(
       exchangeJson.abi,
-      exchangeJson.bytecode
+      exchangeJson.bytecode,
     )) as UniswapV1Exchange__factory;
 
     await setBalance(player.address, PLAYER_INITIAL_ETH_BALANCE);
@@ -50,7 +50,7 @@ describe('[Challenge] Puppet', function () {
     const uniswapExchange = (await ethers.getContractAt(
       exchangeJson.abi,
       (receipt!.logs[0] as EventLog).args[1],
-      deployer
+      deployer,
     )) as unknown as UniswapV1Exchange;
 
     // Deploy the lending pool
@@ -62,12 +62,12 @@ describe('[Challenge] Puppet', function () {
       0, // min_liquidity
       UNISWAP_INITIAL_TOKEN_RESERVE,
       (await time.latest()) * 2, // deadline
-      { value: UNISWAP_INITIAL_ETH_RESERVE, gasLimit: 1e6 }
+      { value: UNISWAP_INITIAL_ETH_RESERVE, gasLimit: 1e6 },
     );
 
     // Ensure Uniswap exchange is working as expected
     expect(await uniswapExchange.getTokenToEthInputPrice(10n ** 18n, { gasLimit: 1e6 })).to.be.eq(
-      calculateTokenToEthInputPrice(10n ** 18n, UNISWAP_INITIAL_TOKEN_RESERVE, UNISWAP_INITIAL_ETH_RESERVE)
+      calculateTokenToEthInputPrice(10n ** 18n, UNISWAP_INITIAL_TOKEN_RESERVE, UNISWAP_INITIAL_ETH_RESERVE),
     );
 
     // Setup initial token balances of pool and player accounts
@@ -78,7 +78,7 @@ describe('[Challenge] Puppet', function () {
     expect(await lendingPool.calculateDepositRequired(10n ** 18n)).to.be.eq(2n * 10n ** 18n);
 
     expect(await lendingPool.calculateDepositRequired(POOL_INITIAL_TOKEN_BALANCE)).to.be.eq(
-      POOL_INITIAL_TOKEN_BALANCE * 2n
+      POOL_INITIAL_TOKEN_BALANCE * 2n,
     );
 
     /** CODE YOUR SOLUTION HERE */
