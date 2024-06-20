@@ -13,20 +13,17 @@ Featuring flash loans, price oracles, governance, NFTs, DEXs, lending pools, sma
 ## How to play 🕹️
 
 1. Visit [damnvulnerabledefi.xyz](https://damnvulnerabledefi.xyz) for challenges' descriptions.
-2. Install [pnpm](https://pnpm.io) if you don't have it.
-```bash
-npm install -g pnpm
-```
+2. Install [yarn](https://yarnpkg.com/getting-started/install) package manager.
 3. Clone this repository and install dependencies.
 ```bash
 git clone https://github.com/thepluck/damn-vulnerable-defi-typescript
 cd damn-vulnerable-defi-typescript
-pnpm install
+yarn
 ```
 4. Code your solution in the `[CHALLENGE_NAME].challenge.ts` file (inside each challenge's folder in the `test` folder).
 5. Run the challenge. If the test is successful, you have passed the challenge!
 ```bash
-pnpm [CHALLENGE_NAME]
+yarn [CHALLENGE_NAME]
 ```
 
 ## Tips and tricks ✨
